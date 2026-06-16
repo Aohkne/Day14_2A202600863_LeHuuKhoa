@@ -1,0 +1,77 @@
+# Terms and Conditions of Service - MoMo E-Wallet
+
+Source: https://www.momo.vn/dieu-khoan-dieu-le
+Company: Online Mobile Services Joint Stock Company (M_Service)
+Hotline: 1900 5454 41
+
+---
+
+## Key Components
+
+- Definitions and terminology (15 defined terms)
+- General rules for using the platform
+- Rights and responsibilities of users and M_Service
+- E-wallet account opening and linking procedures
+- Transaction limits and usage rules
+- Dispute resolution and complaint handling
+- Liability limitations
+- Data collection and privacy policies
+
+---
+
+## Critical User Obligations
+
+- Provide accurate information and maintain account security
+- Report suspected fraud within specified timeframes
+- Comply with all anti-money laundering regulations
+
+---
+
+## Transaction Limits
+
+- **Maximum individual wallet balance:** 200,000,000 VND
+- **Monthly transaction limit:** 100,000,000 VND (with certain exemptions)
+
+---
+
+## Protections & Liability Limitations
+
+- M_Service limits liability to actual, direct damages
+- Not responsible for third-party disputes, unauthorized access, and certain technical failures
+- Users are responsible for unauthorized transactions occurring before notifying M_Service of compromised credentials
+
+---
+
+## Key Procedures
+
+- **Complaint resolution:** Up to **45 business days**
+- **Account closure:** May occur due to violations, inactive accounts, or legal requirements
+- **Account closure requests:** Users may request closure if no ongoing disputes or investigations exist
+
+---
+
+## Prohibited Activities
+
+- Using the account for illegal purposes
+- Providing false information
+- Transferring the account to another person
+- Using for gambling, money laundering, or terrorism financing
+- Buying or selling goods/services prohibited by law
+
+---
+
+## Security Features
+
+- PCI DSS security certification
+- Two-factor authentication
+- Fingerprint lock
+- SSL/TLS technology
+- End-to-end encryption
+
+---
+
+## Support Contact
+
+- **Hotline:** 1900 5454 41
+- **MoMo App:** Help feature
+- **Email:** support@momo.vn

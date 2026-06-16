@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "version": "Agent_V2_Optimized",
+    "total": 85,
+    "timestamp": "2026-06-16 17:02:04",
+    "elapsed_s": 57.96,
+    "note": "Judges: deepseek-v4-pro (primary) + gpt-oss-120b (secondary) via Fireworks AI"
+  },
+  "metrics": {
+    "avg_score": 3.5529,
+    "hit_rate": 0.7294,
+    "agreement_rate": 0.8588,
+    "pass_rate": 0.6471,
+    "avg_mrr": 0.5692
+  },
+  "regression": {
+    "v1_avg_score": 3.5765,
+    "delta": -0.0236
+  },
+  "cost": {
+    "total_input_tokens": 86535,
+    "total_output_tokens": 11770,
+    "estimated_cost_usd": 0.020042,
+    "cost_per_eval_usd": 6.959e-05
+  },
+  "thresholds": {
+    "min_avg_score": 3.5,
+    "min_hit_rate": 0.8,
+    "min_agreement_rate": 0.7,
+    "max_score_regression": -0.2
+  }
+}

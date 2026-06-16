@@ -1,0 +1,94 @@
+# Privacy Policy - Tiki
+
+Source: https://tiki.vn/thong-tin/privacy-policy
+Company: Ti Ki Joint Stock Company
+Business Registration: 0309532909 - Department of Planning and Investment, Ho Chi Minh City
+Address: Viettel Building, No. 285 Cach Mang Thang 8, Ward 12, District 10, Ho Chi Minh City
+Hotline: 19006035
+Email: hotro@tiki.vn
+Effective Date: 11/11/2022
+
+---
+
+## 1. Consent
+
+By providing personal information to Tiki, users agree to the privacy terms. The company reserves the right to modify this policy at any time and encourages customers to regularly review updates.
+
+---
+
+## 2. Purposes of Collection
+
+Personal information is collected for:
+
+- **Orders:** Processing issues related to orders
+- **Account Maintenance:** Creating and maintaining accounts, including loyalty programs
+- **Consumer Services:** Responding to customer complaints and requests
+- **Personalization:** Improving the experience, tailoring services to needs, providing targeted advertising
+- **Security:** Preventing account destruction or impersonation activities
+- **Legal Requirements:** Collection as required by applicable law
+
+---
+
+## 3. Scope of Collection
+
+Information is collected when:
+
+- Users directly provide it (full name, email, phone, address, login credentials)
+- Customers interact on the platform (using cookies and tracking technologies)
+- From other legitimate sources
+
+---
+
+## 4. Retention Period
+
+Personal information is stored until the customer requests deletion or logs in and performs the deletion themselves. In all cases, data is secured on Tiki's servers.
+
+---
+
+## 5. No Sharing of Personal Information
+
+Tiki does not provide personal information to third parties, except:
+
+- Partners providing services related to order fulfillment (limited to necessary information)
+- Third-party service providers (must comply with personal data protection laws)
+- Affiliate, co-execution, and outsourcing programs
+- Legal requirements when necessary
+- Business transfers (in the case of mergers or acquisitions)
+
+---
+
+## 6. Data Security
+
+The company implements multiple security measures:
+
+- Storing information in a secure operating environment
+- Only employees, representatives, and service providers with need-to-know access
+- Complying with industry standards and regulations in security
+- Notifying authorities and customers if servers are attacked
+- Securing payment information according to industry standards
+
+---
+
+## 7. Customer Rights
+
+**Basic rights:**
+- Provide information and change decisions at any time
+- Self-check, update, and adjust personal information
+
+**Withdrawal/Deletion:**
+Customers can delete/close their Tiki account; the system will delete all personal data.
+
+**Information Adjustment:**
+Go to Tiki Account Information and perform Adjustments.
+
+**Data Access/Correction Requests:**
+- Registered users: Access through the Account Settings page
+- Non-registered: Submit a written request to the Data Management staff at https://tiki.vn/lien-he/gui-yeu-cau
+
+---
+
+## 8. Contact Information
+
+- **Hotline:** 19006035
+- **Email:** hotro@tiki.vn
+- **Direct contact:** https://tiki.vn/lien-he/gui-yeu-cau

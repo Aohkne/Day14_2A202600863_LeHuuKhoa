@@ -1,0 +1,130 @@
+# Privacy Policy - Shopee Vietnam
+
+Source: https://help.shopee.vn/portal/4/article/77244
+Company: Shopee Vietnam Co., Ltd.
+Address: Floors 4-5-6 Capital Place, Hanoi
+DPO Email: dpo.vn@shopee.com
+
+---
+
+## 1. Introduction
+
+Shopee is committed to protecting personal data in accordance with Vietnamese law. This policy explains how personal information of users (buyers and sellers) is collected, used, and processed.
+
+---
+
+## 2. When Data Is Collected
+
+Shopee collects information when users:
+- Register an account
+- Submit forms
+- Conduct transactions
+- Communicate through various channels
+- Use the application
+- Share device location
+- Link social media accounts
+
+---
+
+## 3. Types of Data Collected
+
+Includes:
+- Full name, email, date of birth, address
+- Banking information
+- Phone number
+- Images/videos
+- Device information
+- Location data
+- Transaction history
+
+---
+
+## 4. Automatically Collected Data
+
+The system records:
+- IP address
+- Operating system
+- Browser type
+
+Shopee uses cookies to track user activity on the platform.
+
+---
+
+## 5. Cookies
+
+Shopee uses cookies to improve services and provide relevant content. Users can disable cookies through browser settings.
+
+---
+
+## 6. Use of Information
+
+Data is used to:
+- Process transactions
+- Manage accounts
+- Improve services
+- Marketing
+- Credit assessment
+- Legal compliance
+- Fraud prevention
+- Data backup
+
+---
+
+## 7. Information Protection
+
+Shopee implements security measures such as encryption and restricted employee access. However, absolute security cannot be guaranteed.
+
+---
+
+## 8. Disclosure of Information
+
+Data may be shared with:
+- Affiliated companies
+- Service providers
+- Payment partners
+- Government authorities (when required by law)
+- Other third parties
+
+---
+
+## 9. Children's Information
+
+The service is not intended for children under 13. Shopee will delete data if discovered to originate from children.
+
+---
+
+## 10. Third-Party Collection
+
+Shopee uses Google Analytics and third-party applications. Users should read the privacy policies of these parties.
+
+---
+
+## 11. Disclaimer
+
+Shopee is not responsible for security on linked third-party websites.
+
+---
+
+## 12. International Data Transfers
+
+Data may be transferred, stored, or processed overseas in compliance with data protection laws.
+
+---
+
+## 13. User Rights
+
+You may:
+- Withdraw consent
+- Request restriction of processing
+- Object to processing
+- Request access to or provision of personal data
+
+Contact: dpo.vn@shopee.com
+
+---
+
+## 14. Contact
+
+For complaints or inquiries:
+- Address: Shopee Vietnam Co., Ltd., Floors 4-5-6 Capital Place, Hanoi
+- Email: dpo.vn@shopee.com

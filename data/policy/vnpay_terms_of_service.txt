@@ -1,0 +1,113 @@
+# Terms and Conditions of Service - VNPAY
+
+Source: https://vnpay.vn/chinh-sach/dieu-khoan-dieu-kien-sddv-vnpay-bsddv.html
+Company: Vietnam Payment Solution Joint Stock Company (VNPAY)
+
+---
+
+## A. General Provisions
+
+### Definitions
+
+Over 40 terms are defined including:
+- Payment services (QR codes, POS, PhonePOS)
+- Tax filing services (invoices, electronic documents)
+- Transaction types (valid, fraudulent, refund, chargeback)
+- Card categories (domestic vs. international)
+
+### Common Commitments
+
+All parties are required to:
+- Provide accurate information
+- Implement information security and fraud prevention
+- Cooperate on risk management and investigations
+
+### VNPAY Rights
+
+- Suspend service for violations or legal compliance
+- Collect fees as agreed
+- Protect intellectual property for all developed systems
+
+### Merchant Obligations
+
+- Operate legally and with proper authorization
+- Not charge customers extra fees for card payments
+- Retain transaction documentation for **18 months**
+- Comply with regulatory standards
+
+---
+
+## B. Transaction Processing & Payment Services
+
+### Refund Policy
+
+- Percentage-based refund of service fees
+- No refund of fixed fees for partial refunds
+- Exclusions for deposits and software maintenance
+
+### Dispute Resolution
+
+- Response timeframe: **3-5 business days**
+- Document submission required within **3 days**
+- Transaction verification procedures
+
+### Equipment Management
+
+- POS machine care and security protocols
+- Replacement procedures (3 business days)
+- Damage compensation calculations based on depreciation
+- Return obligation within **5 business days** of notice
+
+---
+
+## C. MOTO Transactions
+
+Detailed requirements for mail order/telephone order payments:
+- Minimum documentation standards
+- Customer verification procedures
+- Cardholder signature matching protocols
+- Merchant liability for fraudulent or disputed transactions
+
+---
+
+## D. Installment Conversion Support
+
+VNPAY assists customers in converting purchases to 0% interest installments through partner banks.
+
+**Fee schedule by bank:** 1.8% – 8.9% depending on the installment period.
+
+---
+
+## E. Digital Tax Services
+
+**Services provided:**
+- Digital signature certificates (VNPAY-CA)
+- Electronic invoicing (VNPAY-Invoice)
+- Tax data transmission (VNPAY-TVAN)
+- Sales management software
+- Electronic contract platform (VNeDOC)
+
+**Implementation:** Includes technical support, account setup, and 24/7 service availability (excluding force majeure events).
+
+---
+
+## F. Contract Duration & Termination
+
+- **Term:** 3 years, auto-renewing annually unless 30 days' notice given
+- **Early Termination:** 15 business days' notice for material breach; 30 days for convenience
+- **Post-Termination Obligations:** Financial settlements and dispute resolution continue
+
+---
+
+## G. Data Protection & Confidentiality
+
+- **5-year** confidentiality obligation after contract ends
+- Customer consent required for personal data sharing
+- Immediate breach notification requirements
+- Cross-border data transfer restrictions without written approval
+
+---
+
+## H. Governing Law
+
+Vietnamese law applies with automatic incorporation of legal amendments during the contract term.
