@@ -58,21 +58,22 @@ class RAGEvaluator:
 
 # ── Benchmark runner ─────────────────────────────────────────────────────────
 
-async def run_benchmark(agent_version: str, judge: LLMJudge):
-    print(f"\n[START] Benchmark [{agent_version}]...")
-
+def load_golden_set():
     if not os.path.exists("data/golden_set.jsonl"):
         print("[ERROR] Thieu data/golden_set.jsonl. Hay chay 'python data/synthetic_gen.py' truoc.")
-        return None, None
-
+        return None
     with open("data/golden_set.jsonl", "r", encoding="utf-8") as f:
         dataset = [json.loads(line) for line in f if line.strip()]
-
     if not dataset:
         print("[ERROR] File data/golden_set.jsonl rong.")
-        return None, None
+        return None
+    return dataset
 
-    runner  = BenchmarkRunner(MainAgent(), RAGEvaluator(), judge)
+
+async def run_benchmark(agent_version: str, agent_impl_version: str, dataset: list, judge: LLMJudge):
+    print(f"\n[START] Benchmark [{agent_version}]...")
+
+    runner  = BenchmarkRunner(MainAgent(version=agent_impl_version), RAGEvaluator(), judge)
     t_start = time.perf_counter()
     results = await runner.run_all(dataset)
     elapsed = time.perf_counter() - t_start
@@ -134,18 +135,45 @@ def apply_release_gate(v1_summary: dict, v2_summary: dict) -> list:
 
 # ── Entry point ───────────────────────────────────────────────────────────────
 
+async def run_position_bias_sample(judge: LLMJudge, dataset: list, v1_results: list,
+                                    v2_results: list, sample_size: int = 10) -> dict:
+    """Swap-order pairwise check of V1 vs V2 answers on a sample, to see whether
+    JUDGE_A's preference tracks content or just display position."""
+    n = min(sample_size, len(dataset))
+    checks = await asyncio.gather(*[
+        judge.check_position_bias(
+            dataset[i]["question"],
+            v1_results[i]["agent_response"],
+            v2_results[i]["agent_response"],
+            dataset[i]["expected_answer"],
+        )
+        for i in range(n)
+    ])
+    n_biased = sum(1 for c in checks if c.get("position_bias_detected"))
+    return {
+        "sample_size": n,
+        "biased_count": n_biased,
+        "position_bias_rate": round(n_biased / n, 4) if n else None,
+    }
+
+
 async def main():
-    judge = LLMJudge()  # shared instance — accumulates cost across all runs
-
-    v1_results, v1_summary = await run_benchmark("Agent_V1_Base",      judge)
-    v2_results, v2_summary = await run_benchmark("Agent_V2_Optimized", judge)
-
-    if not v1_summary or not v2_summary:
+    dataset = load_golden_set()
+    if not dataset:
         print("[ERROR] Khong the chay Benchmark. Kiem tra lai data/golden_set.jsonl.")
         return
 
+    judge = LLMJudge()  # shared instance — accumulates cost & score pairs across all runs
+
+    v1_results, v1_summary = await run_benchmark("Agent_V1_Base",      "v1", dataset, judge)
+    v2_results, v2_summary = await run_benchmark("Agent_V2_Optimized", "v2", dataset, judge)
+
     cost  = judge.get_cost_report()
+    kappa = judge.get_cohens_kappa()
     delta = v2_summary["metrics"]["avg_score"] - v1_summary["metrics"]["avg_score"]
+
+    print("\n[BIAS] Checking judge position bias (V1 vs V2 answers, order-swapped sample)...")
+    position_bias = await run_position_bias_sample(judge, dataset, v1_results, v2_results)
 
     print("\n" + "=" * 60)
     print("[STATS] REGRESSION COMPARISON")
@@ -157,14 +185,22 @@ async def main():
     print(f"   Output tokens: {cost['total_output_tokens']:,}")
     print(f"   Total cost   : ${cost['estimated_cost_usd']:.4f} USD")
     print(f"   Cost per eval: ${cost['cost_per_eval_usd']:.6f} USD")
+    print("\n[RELIABILITY] JUDGE RELIABILITY")
+    print(f"   Cohen's Kappa      : {kappa['kappa']}")
+    print(f"   Position bias rate : {position_bias['position_bias_rate']:.0%} "
+          f"({position_bias['biased_count']}/{position_bias['sample_size']} sampled)")
 
     # Enrich V2 summary with regression & cost data before saving
     v2_summary["regression"] = {
         "v1_avg_score": v1_summary["metrics"]["avg_score"],
         "delta":        round(delta, 4),
     }
-    v2_summary["cost"]       = cost
-    v2_summary["thresholds"] = QUALITY_THRESHOLDS
+    v2_summary["cost"]             = cost
+    v2_summary["thresholds"]       = QUALITY_THRESHOLDS
+    v2_summary["judge_reliability"] = {
+        "cohens_kappa":  kappa,
+        "position_bias": position_bias,
+    }
 
     issues = apply_release_gate(v1_summary, v2_summary)
 

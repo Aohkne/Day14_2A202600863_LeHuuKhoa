@@ -21,23 +21,19 @@ Output ONLY this JSON with no other text: {{"score": <1-5>, "reasoning": "<one s
 
 
 class LLMJudge:
-    # Pricing per 1K tokens (USD) as of 2025
+    # Pricing per 1K tokens (USD), OpenAI list prices
     _MODEL_COSTS = {
-        "accounts/fireworks/models/deepseek-v4-pro": {"input": 0.003000, "output": 0.007000},
-        "accounts/fireworks/models/gpt-oss-120b":    {"input": 0.002000, "output": 0.002000},
-        # legacy OpenAI names kept for cost fallback
+        "gpt-4o":        {"input": 0.002500, "output": 0.010000},
         "gpt-4o-mini":   {"input": 0.000150, "output": 0.000600},
-        "gpt-3.5-turbo": {"input": 0.000500, "output": 0.001500},
     }
-    JUDGE_A = "accounts/fireworks/models/deepseek-v4-pro"
-    JUDGE_B = "accounts/fireworks/models/gpt-oss-120b"
+    JUDGE_A = "gpt-4o"
+    JUDGE_B = "gpt-4o-mini"
 
     def __init__(self):
-        self.client = AsyncOpenAI(
-            api_key=os.getenv("OPENAI_API_KEY"),
-            base_url=os.getenv("FIREWORKS_BASE_URL") or None,
-        )
+        self.client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         self._tokens = {"input": 0, "output": 0}
+        self._tokens_by_model: Dict[str, Dict[str, int]] = {}
+        self._score_pairs: list = []  # (score_a, score_b) per case, for Cohen's Kappa
 
     async def _call_single(self, model: str, question: str, answer: str, ground_truth: str) -> Dict:
         prompt = JUDGE_PROMPT.format(
@@ -53,6 +49,9 @@ class LLMJudge:
             )
             self._tokens["input"] += resp.usage.prompt_tokens
             self._tokens["output"] += resp.usage.completion_tokens
+            self._tokens_by_model.setdefault(model, {"input": 0, "output": 0})
+            self._tokens_by_model[model]["input"] += resp.usage.prompt_tokens
+            self._tokens_by_model[model]["output"] += resp.usage.completion_tokens
             content = (resp.choices[0].message.content or "").strip()
             # Try full parse first, then extract JSON block from mixed responses
             try:
@@ -74,6 +73,7 @@ class LLMJudge:
         )
 
         s_a, s_b = result_a["score"], result_b["score"]
+        self._score_pairs.append((s_a, s_b))
         delta = abs(s_a - s_b)
 
         if delta <= 1:
@@ -137,14 +137,43 @@ class LLMJudge:
         except Exception as exc:
             return {"position_bias_detected": False, "error": str(exc)}
 
+    def get_cohens_kappa(self) -> Dict[str, Any]:
+        """Cohen's Kappa over exact-match categories (score 1-5) between the two judges,
+        correcting naive agreement_rate for chance agreement."""
+        pairs = self._score_pairs
+        n = len(pairs)
+        if n == 0:
+            return {"kappa": None, "n": 0}
+
+        categories = [1, 2, 3, 4, 5]
+        row_counts = {c: 0 for c in categories}  # Judge A marginal
+        col_counts = {c: 0 for c in categories}  # Judge B marginal
+        agree = 0
+        for s_a, s_b in pairs:
+            row_counts[s_a] += 1
+            col_counts[s_b] += 1
+            if s_a == s_b:
+                agree += 1
+
+        po = agree / n
+        pe = sum(row_counts[c] * col_counts[c] for c in categories) / (n * n)
+        kappa = 0.0 if pe == 1.0 else (po - pe) / (1 - pe)
+
+        return {
+            "kappa": round(kappa, 4),
+            "observed_agreement": round(po, 4),
+            "expected_agreement": round(pe, 4),
+            "n": n,
+        }
+
     def get_cost_report(self) -> Dict:
-        """Compute estimated cost based on tracked token usage (gpt-4o-mini pricing)."""
-        rates = self._MODEL_COSTS[self.JUDGE_A]
-        cost = (
-            self._tokens["input"]  / 1000 * rates["input"] +
-            self._tokens["output"] / 1000 * rates["output"]
-        )
-        total_calls = max(1, self._tokens["input"] // 300)
+        """Compute estimated cost per-model (each judge is priced at its own rate)."""
+        cost = 0.0
+        for model, tok in self._tokens_by_model.items():
+            rates = self._MODEL_COSTS.get(model, self._MODEL_COSTS[self.JUDGE_A])
+            cost += tok["input"] / 1000 * rates["input"] + tok["output"] / 1000 * rates["output"]
+
+        total_calls = max(1, len(self._score_pairs))
         return {
             "total_input_tokens":  self._tokens["input"],
             "total_output_tokens": self._tokens["output"],

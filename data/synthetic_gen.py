@@ -37,7 +37,7 @@ load_dotenv()
 POLICY_DIR   = Path(__file__).parent / "policy"
 OUTPUT_FILE  = Path(__file__).parent / "golden_set.jsonl"
 SKIP_FILES   = {"HARD_CASES_GUIDE.md"}          # not a policy doc
-MODEL        = "accounts/fireworks/models/deepseek-v4-pro"
+MODEL        = "gpt-4o-mini"
 NORMAL_PER_DOC      = 4   # normal QA cases per document
 ADVERSARIAL_PER_DOC = 1   # red-teaming cases per document
 CROSS_DOC_PAIRS     = [   # (doc_id_a, doc_id_b) to generate cross-doc questions
@@ -50,14 +50,11 @@ CROSS_DOC_PAIRS     = [   # (doc_id_a, doc_id_b) to generate cross-doc questions
 CROSS_DOC_PER_PAIR  = 2
 SEMAPHORE_LIMIT     = 5   # max concurrent OpenAI calls
 
-# Cost tracking (DeepSeek V3 on Fireworks pricing)
-COST_PER_1K_INPUT  = 0.000900   # USD
-COST_PER_1K_OUTPUT = 0.000900   # USD
+# Cost tracking (gpt-4o-mini pricing)
+COST_PER_1K_INPUT  = 0.000150   # USD
+COST_PER_1K_OUTPUT = 0.000600   # USD
 
-client = AsyncOpenAI(
-    api_key=os.getenv("OPENAI_API_KEY"),
-    base_url=os.getenv("FIREWORKS_BASE_URL", "https://api.fireworks.ai/inference/v1"),
-)
+client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # Prompts
 NORMAL_PROMPT = """\

@@ -26,12 +26,14 @@ SYSTEM_PROMPT = (
 
 
 class MainAgent:
-    def __init__(self):
-        self.name = "SupportAgent-v1"
-        self.client = AsyncOpenAI(
-            api_key=os.getenv("OPENAI_API_KEY"),
-            base_url=os.getenv("FIREWORKS_BASE_URL") or None,
-        )
+    def __init__(self, version: str = "v2"):
+        """version="v1": baseline top-k retrieval (no per-doc cap) — prone to being
+        dominated by a single long document on cross-document questions.
+        version="v2": adds document-diversity capping (max 2 chunks/doc), the
+        optimization identified in failure analysis to fix cross-doc misses."""
+        self.name = f"SupportAgent-{version}"
+        self.version = version
+        self.client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         self._chunks: List[Dict] = []
         self._load_documents()
 
@@ -55,13 +57,17 @@ class MainAgent:
     # ── Keyword-overlap retrieval (BM25-style) ───────────────────────────────
 
     def _retrieve(self, question: str, top_k: int = 6) -> List[Dict]:
-        """BM25-style retrieval with document diversity (max 2 chunks per doc)."""
+        """BM25-style retrieval. v2 adds document diversity (max 2 chunks/doc);
+        v1 is plain top-k, which longer documents can dominate."""
         q_tokens = set(re.findall(r"\w+", question.lower()))
         scored = sorted(
             self._chunks,
             key=lambda c: len(q_tokens & c["tokens"]),
             reverse=True,
         )
+        if self.version == "v1":
+            return scored[:top_k]
+
         seen: Dict[str, int] = {}
         result = []
         for chunk in scored:
@@ -81,7 +87,7 @@ class MainAgent:
         retrieved_ids = list(dict.fromkeys(c["doc_id"] for c in top_chunks))
 
         resp = await self.client.chat.completions.create(
-            model=os.getenv("AGENT_MODEL", "accounts/fireworks/models/gpt-oss-120b"),
+            model=os.getenv("AGENT_MODEL", "gpt-4o-mini"),
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user",   "content": f"Policy excerpts:\n{context}\n\nQuestion: {question}"},
@@ -94,7 +100,7 @@ class MainAgent:
             "answer":   resp.choices[0].message.content.strip(),
             "contexts": [c["text"] for c in top_chunks],
             "metadata": {
-                "model":         os.getenv("AGENT_MODEL", "accounts/fireworks/models/gpt-oss-120b"),
+                "model":         os.getenv("AGENT_MODEL", "gpt-4o-mini"),
                 "tokens_used":   resp.usage.total_tokens,
                 "retrieved_ids": retrieved_ids,
                 "sources":       retrieved_ids,

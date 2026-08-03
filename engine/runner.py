@@ -35,7 +35,7 @@ class BenchmarkRunner:
             "status": "fail" if judge_result["final_score"] < 3 else "pass"
         }
 
-    async def run_all(self, dataset: List[Dict], batch_size: int = 5) -> List[Dict]:
+    async def run_all(self, dataset: List[Dict], batch_size: int = 15) -> List[Dict]:
         """
         Chạy song song bằng asyncio.gather với giới hạn batch_size để không bị Rate Limit.
         """
